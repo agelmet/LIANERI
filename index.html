@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Σάντυ Λιανέρη — Ψυχολόγος · Ψυχοθεραπεύτρια</title>
     <link rel="icon" href="https://github.com/agelmet/LIANERI/blob/main/SD%20logo.png?raw=true" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
     <style>
         :root {
             --c-cream: #eaf7f9;
@@ -128,14 +128,22 @@
             100% { transform: translate(40px, -30px) scale(1.1); }
         }
         .hero-lines { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-        .hero-lines .line { position: absolute; background: var(--c-accent); opacity: 0.06; }
-        .hero-lines .line:nth-child(1) { width: 1px; height: 40%; top: 10%; left: 18%; animation: lineFloat 8s ease-in-out infinite; }
-        .hero-lines .line:nth-child(2) { width: 60%; height: 1px; top: 30%; right: -10%; animation: lineFloat 10s ease-in-out infinite reverse; }
-        .hero-lines .line:nth-child(3) { width: 1px; height: 30%; bottom: 15%; right: 25%; animation: lineFloat 7s ease-in-out infinite 2s; }
-        @keyframes lineFloat {
-            0%, 100% { transform: translate(0, 0); opacity: 0.04; }
-            50% { transform: translate(10px, -15px); opacity: 0.08; }
+        .hero-lines .line { position: absolute; background: linear-gradient(90deg, transparent, var(--c-accent), transparent); opacity: 0.15; }
+        .hero-lines .line:nth-child(1) { width: 1px; height: 100%; top: 0; left: 20%; background: linear-gradient(180deg, transparent, var(--c-accent), transparent); animation: panY 12s linear infinite; }
+        .hero-lines .line:nth-child(2) { width: 100%; height: 1px; top: 35%; left: 0; animation: panX 15s linear infinite; }
+        .hero-lines .line:nth-child(3) { width: 1px; height: 100%; top: 0; right: 25%; background: linear-gradient(180deg, transparent, var(--c-accent), transparent); animation: panY 18s linear infinite reverse; }
+        .hero-lines .line:nth-child(4) { width: 100%; height: 1px; bottom: 25%; left: 0; animation: panX 20s linear infinite reverse; }
+        .hero-lines .line-glow {
+            position: absolute; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(123,167,171,0.08) 0%, transparent 60%);
+            border-radius: 50%; top: 50%; left: 50%;
+            animation: pulseGlow 6s ease-in-out infinite alternate;
+            transform: translate(-50%, -50%);
         }
+        @keyframes panY { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+        @keyframes panX { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        @keyframes pulseGlow { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } }
+
         .hero-content {
             position: relative; z-index: 2; text-align: center;
             max-width: 800px; padding: 120px 32px 80px;
@@ -147,12 +155,12 @@
             opacity: 0; animation: fadeUp 1s var(--ease-out) 0.2s forwards;
         }
         .hero-title {
-            font-family: var(--font-display);
-            font-size: clamp(2.4rem, 5.5vw, 4.2rem);
-            font-weight: 300; line-height: 1.15; color: var(--c-dark); margin-bottom: 28px;
+            font-family: 'Playfair Display', var(--font-display);
+            font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+            font-weight: 400; line-height: 1.3; color: var(--c-dark); margin-bottom: 28px;
             opacity: 0; animation: fadeUp 1s var(--ease-out) 0.4s forwards;
         }
-        .hero-title em { font-style: italic; font-weight: 400; color: var(--c-accent-deep); }
+        .hero-title em { font-style: italic; font-weight: 500; color: var(--c-accent-deep); }
         .hero-subtitle {
             font-family: var(--font-body); font-size: 1.05rem; font-weight: 300;
             color: var(--c-muted); line-height: 1.8; max-width: 580px;
@@ -338,43 +346,6 @@
         .faq-content p { font-size: 0.9rem; color: var(--c-muted); line-height: 1.9; margin-bottom: 16px; }
         .faq-content p:last-child { font-family: var(--font-display); font-size: 1.05rem; font-style: italic; color: var(--c-accent-deep); }
 
-        /* ═══ REVIEWS ═══ */
-        .reviews { background: var(--c-light); overflow: hidden; }
-        .reviews-header { text-align: center; margin-bottom: 56px; }
-        .reviews-header .section-subtitle { margin: 0 auto; }
-        .reviews-track-wrapper { overflow: hidden; position: relative; }
-        .reviews-track {
-            display: flex; gap: 24px;
-            animation: scrollReviews 40s linear infinite; width: max-content;
-        }
-        .reviews-track:hover { animation-play-state: paused; }
-        @keyframes scrollReviews {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .review-card {
-            flex-shrink: 0; width: 380px; background: var(--c-white);
-            border-radius: 4px; padding: 40px 36px; border: 1px solid var(--c-border);
-            transition: all 0.4s var(--ease-out);
-        }
-        .review-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.05); }
-        .review-stars { display: flex; gap: 3px; margin-bottom: 20px; }
-        .review-stars svg { width: 14px; height: 14px; fill: var(--c-accent-deep); }
-        .review-text {
-            font-family: var(--font-display); font-size: 1.05rem; font-style: italic;
-            color: var(--c-text); line-height: 1.7; margin-bottom: 24px;
-        }
-        .review-author {
-            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
-            text-transform: uppercase; color: var(--c-muted);
-        }
-        .review-source {
-            display: flex; align-items: center; gap: 8px; margin-top: 16px;
-            padding-top: 16px; border-top: 1px solid var(--c-border);
-        }
-        .review-source img { height: 18px; width: auto; opacity: 0.5; }
-        .review-source span { font-size: 0.68rem; color: var(--c-muted); letter-spacing: 0.05em; }
-
         /* ═══ CREDENTIALS ═══ */
         .credentials { background: var(--c-white); }
         .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -400,7 +371,6 @@
         /* ═══ FOOTER ═══ */
         .footer { background: var(--c-dark); color: rgba(255,255,255,0.4); padding: 72px 0 40px; }
         .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 60px; margin-bottom: 48px; }
-        .footer-brand img { height: 44px; width: auto; margin-bottom: 20px; filter: brightness(10); opacity: 0.7; }
         .footer-brand p { font-size: 0.85rem; line-height: 1.8; max-width: 300px; }
         .footer h4 {
             font-family: var(--font-body); font-size: 0.68rem; font-weight: 600;
@@ -448,14 +418,12 @@
             .hero-content { padding: 100px 20px 60px; }
             .service-card { padding: 32px 24px; }
             .pillar { padding: 28px 20px; }
-            .review-card { width: 300px; padding: 28px 24px; }
             .nav-logo img { height: 42px; }
         }
     </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav" id="nav">
     <div class="nav-inner">
         <a href="#top" class="nav-logo" aria-label="Αρχική"><img src="https://github.com/agelmet/LIANERI/blob/main/SD%20logo.png?raw=true" alt="Sandy Lianeri Logo"></a>
@@ -479,12 +447,17 @@
     <a href="https://www.instadoctor.gr/doctor/lianeri-sandy" target="_blank" rel="noopener" style="color:var(--c-accent-deep);">Κλείστε Ραντεβού</a>
 </div>
 
-<!-- HERO -->
 <section class="hero" id="top">
-    <div class="hero-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="hero-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line-glow"></div>
+    </div>
     <div class="hero-content">
         <p class="hero-tag">Σάντυ Λιανέρη — Ψυχολόγος · Ψυχοθεραπεύτρια</p>
-        <h1 class="hero-title">Γνωσιακή Συμπεριφορική Θεραπεία &amp; Διασυνδετική Ψυχιατρική: <em>Γεφυρώνοντας το Σώμα με την Ψυχή</em></h1>
+        <h1 class="hero-title">Γνωσιακή Συμπεριφορική Θεραπεία &amp; Διασυνδετική Ψυχιατρική:<br><em>Γεφυρώνοντας το Σώμα με την Ψυχή</em></h1>
         <p class="hero-subtitle">Ένας ασφαλής, επιστημονικά τεκμηριωμένος χώρος όπου η ψυχολογική και η σωματική σας υγεία αντιμετωπίζονται ως ένα αδιαίρετο σύνολο.</p>
         <div class="hero-actions">
             <a href="https://www.instadoctor.gr/doctor/lianeri-sandy" target="_blank" rel="noopener" class="btn-primary">Κλείστε Ραντεβού <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
@@ -494,7 +467,6 @@
     <div class="hero-scroll"><span></span></div>
 </section>
 
-<!-- ABOUT -->
 <section class="section about" id="about">
     <div class="container">
         <div class="about-grid">
@@ -518,7 +490,6 @@
     </div>
 </section>
 
-<!-- SERVICES -->
 <section class="section services" id="services">
     <div class="container">
         <div class="services-header">
@@ -536,7 +507,7 @@
             <div class="service-card reveal reveal-delay-1">
                 <div class="service-num">02</div>
                 <h3>Κατάθλιψη, Σχέσεις &amp; Αυτοεκτίμηση</h3>
-                <p>Η θλίψη, η κατάθλιψη και οι δυσκολίες στις διαπροσωπικές σχέσεις συχνά πηγάζουν από έναν σκληρό εσωτερικό κριτή. Δουλεύουμε συνεργατικά για να αντικαταστήσουμε τα αρνητικά μοτίβα με υγιείς, ρεαλιστικές πεποιθήσεις. Στόχος είναι να ενισχύσουμε την αυτοεκτίμηση και την «αυτο-αποτελεσματικότητά» σας — την πίστη δηλαδή στις δικές σας ικανότητες — ώστε να διεκδικείτε υγιείς σχέσεις και να νιώθετε επάρκεια στην καθημερινότητα.</p>
+                <p>Η θλίψη, κατάθλιψη και οι δυσκολίες στις διαπροσωπικές σχέσεις συχνά πηγάζουν από έναν σκληρό εσωτερικό κριτή. Δουλεύουμε συνεργατικά για να αντικαταστήσουμε τα αρνητικά μοτίβα με υγιείς, ρεαλιστικές πεποιθήσεις. Στόχος είναι να ενισχύσουμε την αυτοεκτίμηση και την «αυτο-αποτελεσματικότητά» σας — την πίστη δηλαδή στις δικές σας ικανότητες — ώστε να διεκδικείτε υγιείς σχέσεις και να νιώθετε επάρκεια στην καθημερινότητα.</p>
                 <div class="service-tags"><span>Κατάθλιψη</span><span>Αυτοεκτίμηση</span><span>Σχέσεις</span></div>
             </div>
             <div class="service-card reveal reveal-delay-2">
@@ -555,7 +526,6 @@
     </div>
 </section>
 
-<!-- PILLARS -->
 <section class="section pillars" id="pillars">
     <div class="container">
         <div class="pillars-header">
@@ -587,7 +557,6 @@
     </div>
 </section>
 
-<!-- ROADMAP -->
 <section class="section roadmap" id="roadmap">
     <div class="container">
         <div class="roadmap-header">
@@ -635,7 +604,6 @@
     </div>
 </section>
 
-<!-- FAQ -->
 <section class="section faq" id="faq">
     <div class="container">
         <div class="faq-grid">
@@ -653,32 +621,6 @@
     </div>
 </section>
 
-<!-- REVIEWS -->
-<section class="section reviews" id="reviews">
-    <div class="container">
-        <div class="reviews-header">
-            <p class="section-tag reveal">Εμπειρίες Θεραπευομένων</p>
-            <h2 class="section-title reveal reveal-delay-1">Η Εμπιστοσύνη σας Μιλάει</h2>
-        </div>
-    </div>
-    <div class="reviews-track-wrapper">
-        <div class="reviews-track" id="reviewsTrack">
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Η κα. Λιανέρη με βοήθησε να κατανοήσω τα μοτίβα σκέψης που με κρατούσαν πίσω. Η προσέγγισή της είναι ζεστή αλλά και εξαιρετικά δομημένη.»</p><p class="review-author">Μαρία Κ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Ένιωσα ασφάλεια από την πρώτη στιγμή. Η θεραπεία μου έδωσε εργαλεία που χρησιμοποιώ καθημερινά — για τις σχέσεις μου, την εργασία μου, τον εαυτό μου.»</p><p class="review-author">Δημήτρης Π.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Οι online συνεδρίες ήταν εξίσου αποτελεσματικές. Η κα. Λιανέρη έχει τη σπάνια ικανότητα να σε κάνει να νιώσεις ότι ακούγεσαι πραγματικά.»</p><p class="review-author">Ελένη Σ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Χάρη στη δουλειά μας μαζί, κατάφερα να διαχειριστώ τις κρίσεις πανικού που με ταλαιπωρούσαν χρόνια. Η μέθοδος CBT λειτουργεί πραγματικά.»</p><p class="review-author">Κώστας Α.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Η διασυνδετική προσέγγιση ήταν αποκαλυπτική. Κατάλαβα πώς το χρόνιο πρόβλημα υγείας μου επηρεάζει τη ψυχολογία μου — και αντίστροφα.»</p><p class="review-author">Νίκη Μ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <!-- Duplicate for infinite scroll -->
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Η κα. Λιανέρη με βοήθησε να κατανοήσω τα μοτίβα σκέψης που με κρατούσαν πίσω. Η προσέγγισή της είναι ζεστή αλλά και εξαιρετικά δομημένη.»</p><p class="review-author">Μαρία Κ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Ένιωσα ασφάλεια από την πρώτη στιγμή. Η θεραπεία μου έδωσε εργαλεία που χρησιμοποιώ καθημερινά — για τις σχέσεις μου, την εργασία μου, τον εαυτό μου.»</p><p class="review-author">Δημήτρης Π.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Οι online συνεδρίες ήταν εξίσου αποτελεσματικές. Η κα. Λιανέρη έχει τη σπάνια ικανότητα να σε κάνει να νιώσεις ότι ακούγεσαι πραγματικά.»</p><p class="review-author">Ελένη Σ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Χάρη στη δουλειά μας μαζί, κατάφερα να διαχειριστώ τις κρίσεις πανικού που με ταλαιπωρούσαν χρόνια. Η μέθοδος CBT λειτουργεί πραγματικά.»</p><p class="review-author">Κώστας Α.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Η διασυνδετική προσέγγιση ήταν αποκαλυπτική. Κατάλαβα πώς το χρόνιο πρόβλημα υγείας μου επηρεάζει τη ψυχολογία μου — και αντίστροφα.»</p><p class="review-author">Νίκη Μ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
-        </div>
-    </div>
-</section>
-
-<!-- CREDENTIALS -->
 <section class="section credentials" id="credentials">
     <div class="container">
         <div class="pillars-header">
@@ -710,7 +652,6 @@
     </div>
 </section>
 
-<!-- CTA -->
 <section class="cta-section">
     <div class="container">
         <p class="section-tag reveal">Το Πρώτο Βήμα</p>
@@ -720,18 +661,16 @@
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer" id="contact">
     <div class="container">
         <div class="footer-grid">
             <div class="footer-brand">
-                <img src="https://github.com/agelmet/LIANERI/blob/main/SD%20logo.png?raw=true" alt="Sandy Lianeri Logo">
                 <p>Σάντυ Λιανέρη — Ψυχολόγος, Ψυχοθεραπεύτρια. Γνωσιακή Συμπεριφορική Θεραπεία &amp; Διασυνδετική Ψυχιατρική.</p>
             </div>
             <div>
                 <h4>Επικοινωνία</h4>
-                <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Βουτσινά 89, Χολαργός, Αττική</span></div>
                 <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:+306978902120">+30 697 890 2120</a></div>
+                <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:2192196589">219 219 6589</a></div>
                 <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><a href="mailto:slianeri.psy@gmail.com">slianeri.psy@gmail.com</a></div>
             </div>
             <div class="footer-hours">
