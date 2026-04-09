@@ -3,719 +3,758 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Σάντυ Λιανέρη | Ψυχολόγος - Ψυχοθεραπεύτρια</title>
+    <title>Σάντυ Λιανέρη — Ψυχολόγος · Ψυχοθεραπεύτρια</title>
     <link rel="icon" href="https://github.com/agelmet/LIANERI/blob/main/SD%20logo.png?raw=true" type="image/png">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Prata&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS VARIABLES (COLOR PALETTE & SIZING) --- */
         :root {
-            --color-white: #ffffff;
-            --color-light: #f2f2f2;
-            --color-accent-1: #eaf7f9;
-            --color-accent-2: #cff5ec;
-            --color-text: #2c3e50;
-            --color-text-muted: #5a6c7d;
-            --font-heading: 'Prata', serif;
-            --font-body: 'Outfit', sans-serif;
-            --transition-smooth: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 15px 40px rgba(44, 62, 80, 0.12);
+            --c-cream: #eaf7f9;
+            --c-mint: #cff5ec;
+            --c-white: #ffffff;
+            --c-light: #f2f2f2;
+            --c-dark: #1a1f2e;
+            --c-text: #2d3142;
+            --c-muted: #6b7080;
+            --c-accent: #7ba7ab;
+            --c-accent-deep: #4a7c82;
+            --c-border: rgba(123,167,171,0.15);
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Manrope', sans-serif;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- GLOBAL RESETS & TYPOGRAPHY --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
         body {
-            font-family: var(--font-body);
-            color: var(--color-text);
-            background-color: var(--color-white);
-            line-height: 1.7;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            font-family: var(--font-body); color: var(--c-text);
+            background: var(--c-white); overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; line-height: 1.7;
+        }
+        .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+        /* ═══ NAVIGATION ═══ */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 20px 0; transition: all 0.5s var(--ease-smooth);
+        }
+        .nav.scrolled {
+            background: rgba(255,255,255,0.92); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); padding: 12px 0;
+            box-shadow: 0 1px 40px rgba(0,0,0,0.04);
+        }
+        .nav-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1240px; margin: 0 auto; padding: 0 32px;
+        }
+        .nav-logo img {
+            height: 54px; width: auto;
+            transition: transform 0.5s var(--ease-out), filter 0.5s;
+            filter: drop-shadow(0 2px 8px rgba(74,124,130,0.15));
+        }
+        .nav-logo:hover img { transform: scale(1.06); filter: drop-shadow(0 4px 16px rgba(74,124,130,0.25)); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a {
+            font-family: var(--font-body); font-size: 0.72rem; font-weight: 500;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--c-text); text-decoration: none;
+            position: relative; padding: 4px 0; transition: color 0.3s;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 1px; background: var(--c-accent-deep);
+            transition: width 0.4s var(--ease-out);
+        }
+        .nav-links a:hover { color: var(--c-accent-deep); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-cta {
+            font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--c-white) !important; background: var(--c-accent-deep);
+            padding: 12px 28px; border-radius: 2px; text-decoration: none;
+            transition: all 0.4s var(--ease-out); border: 1px solid var(--c-accent-deep);
+        }
+        .nav-cta::after { display: none !important; }
+        .nav-cta:hover { background: var(--c-dark); border-color: var(--c-dark); color: var(--c-white) !important; transform: translateY(-1px); }
+
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .nav-toggle span {
+            display: block; width: 24px; height: 1.5px; background: var(--c-dark);
+            margin: 6px 0; transition: all 0.4s var(--ease-out);
+        }
+        .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .mobile-menu {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--c-white); z-index: 999;
+            flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s;
+        }
+        .mobile-menu.active { opacity: 1; pointer-events: all; }
+        .mobile-menu a {
+            font-family: var(--font-display); font-size: 2rem; font-weight: 400;
+            color: var(--c-text); text-decoration: none; transition: color 0.3s;
+        }
+        .mobile-menu a:hover { color: var(--c-accent-deep); }
+
+        @media (max-width: 960px) {
+            .nav-links { display: none; }
+            .nav-toggle { display: block; z-index: 1001; }
+            .mobile-menu { display: flex; }
         }
 
-        h1, h2, h3, h4 {
-            font-family: var(--font-heading);
-            font-weight: 400;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-            color: var(--color-text-muted);
-            font-size: 1.05rem;
-            font-weight: 300;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: var(--transition-smooth);
-        }
-
-        /* --- BUTTONS --- */
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background-color: var(--color-accent-2);
-            color: var(--color-text);
-            font-family: var(--font-body);
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            border: 1px solid transparent;
-            box-shadow: var(--shadow-subtle);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn:hover {
-            background-color: var(--color-white);
-            border-color: var(--color-accent-2);
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-3px);
-        }
-
-        /* --- HEADER & NAVIGATION --- */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
-            transition: var(--transition-smooth);
-        }
-
-        .logo-container img {
-            height: 70px;
-            width: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            transition: transform 0.5s ease;
-        }
-
-        .logo-container img:hover {
-            transform: scale(1.05);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-        }
-
-        nav a {
-            font-size: 0.95rem;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--color-text);
-            transition: var(--transition-smooth);
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* --- HERO SECTION --- */
+        /* ═══ HERO ═══ */
         .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 5%;
-            background: linear-gradient(135deg, var(--color-white) 0%, var(--color-accent-1) 100%);
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+            background: linear-gradient(165deg, var(--c-white) 0%, var(--c-cream) 40%, var(--c-mint) 100%);
         }
-
         .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(207,245,236,0.3) 0%, transparent 60%);
-            animation: rotateBg 30s linear infinite;
+            content: ''; position: absolute; top: -30%; right: -15%;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(207,245,236,0.5) 0%, transparent 70%);
+            border-radius: 50%; animation: heroOrb 12s ease-in-out infinite alternate;
         }
-
-        @keyframes rotateBg {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .hero::after {
+            content: ''; position: absolute; bottom: -20%; left: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(234,247,249,0.6) 0%, transparent 70%);
+            border-radius: 50%; animation: heroOrb 15s ease-in-out infinite alternate-reverse;
         }
-
+        @keyframes heroOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -30px) scale(1.1); }
+        }
+        .hero-lines { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+        .hero-lines .line { position: absolute; background: var(--c-accent); opacity: 0.06; }
+        .hero-lines .line:nth-child(1) { width: 1px; height: 40%; top: 10%; left: 18%; animation: lineFloat 8s ease-in-out infinite; }
+        .hero-lines .line:nth-child(2) { width: 60%; height: 1px; top: 30%; right: -10%; animation: lineFloat 10s ease-in-out infinite reverse; }
+        .hero-lines .line:nth-child(3) { width: 1px; height: 30%; bottom: 15%; right: 25%; animation: lineFloat 7s ease-in-out infinite 2s; }
+        @keyframes lineFloat {
+            0%, 100% { transform: translate(0, 0); opacity: 0.04; }
+            50% { transform: translate(10px, -15px); opacity: 0.08; }
+        }
         .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 900px;
+            position: relative; z-index: 2; text-align: center;
+            max-width: 800px; padding: 120px 32px 80px;
         }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            color: var(--color-text);
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 1s forwards 0.3s ease-out;
+        .hero-tag {
+            font-family: var(--font-body); font-size: 0.68rem; font-weight: 600;
+            letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--c-accent-deep); margin-bottom: 28px;
+            opacity: 0; animation: fadeUp 1s var(--ease-out) 0.2s forwards;
         }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 1s forwards 0.6s ease-out;
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+            font-weight: 300; line-height: 1.15; color: var(--c-dark); margin-bottom: 28px;
+            opacity: 0; animation: fadeUp 1s var(--ease-out) 0.4s forwards;
         }
-
-        .hero .btn {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 1s forwards 0.9s ease-out;
+        .hero-title em { font-style: italic; font-weight: 400; color: var(--c-accent-deep); }
+        .hero-subtitle {
+            font-family: var(--font-body); font-size: 1.05rem; font-weight: 300;
+            color: var(--c-muted); line-height: 1.8; max-width: 580px;
+            margin: 0 auto 44px;
+            opacity: 0; animation: fadeUp 1s var(--ease-out) 0.6s forwards;
         }
-
-        /* --- SECTION STRUCTURE --- */
-        section {
-            padding: 100px 5%;
+        .hero-actions {
+            display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+            opacity: 0; animation: fadeUp 1s var(--ease-out) 0.8s forwards;
         }
-
-        .bg-light { background-color: var(--color-light); }
-        .bg-white { background-color: var(--color-white); }
-        .bg-accent { background-color: var(--color-accent-1); }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-family: var(--font-body); font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--c-white); background: var(--c-accent-deep);
+            padding: 16px 36px; border-radius: 2px; text-decoration: none;
+            transition: all 0.4s var(--ease-out);
+            box-shadow: 0 4px 20px rgba(74,124,130,0.2);
         }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            position: relative;
-            display: inline-block;
+        .btn-primary:hover { background: var(--c-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,31,46,0.2); }
+        .btn-primary svg { width: 14px; height: 14px; transition: transform 0.3s; }
+        .btn-primary:hover svg { transform: translateX(3px); }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: var(--font-body); font-size: 0.72rem; font-weight: 500;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--c-text); background: transparent;
+            padding: 16px 36px; border-radius: 2px; text-decoration: none;
+            border: 1px solid var(--c-border); transition: all 0.4s var(--ease-out);
         }
-
-        .section-header h2::after {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 2px;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--color-accent-2);
+        .btn-secondary:hover { border-color: var(--c-accent-deep); color: var(--c-accent-deep); }
+        .hero-scroll {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 2;
+            opacity: 0; animation: fadeUp 1s var(--ease-out) 1.2s forwards;
         }
-
-        /* --- ABOUT SECTION --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
+        .hero-scroll span {
+            display: block; width: 1px; height: 48px;
+            background: linear-gradient(to bottom, var(--c-accent), transparent);
+            margin: 0 auto; animation: scrollLine 2s ease-in-out infinite;
         }
-
-        .about-image-wrapper {
-            position: relative;
-            padding: 20px;
+        @keyframes scrollLine {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            50.1% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
         }
-
-        .about-image-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 1px solid var(--color-accent-2);
-            transform: translate(-15px, -15px);
-            z-index: 0;
-            transition: var(--transition-smooth);
-        }
-
-        .about-image {
-            width: 100%;
-            max-height: 700px;
-            object-fit: contain; /* Do not crop */
-            position: relative;
-            z-index: 1;
-            box-shadow: var(--shadow-subtle);
-            animation: floatImage 6s ease-in-out infinite;
-            cursor: pointer;
-        }
-
-        @keyframes floatImage {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* --- SERVICES SECTION --- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background: var(--color-white);
-            padding: 3rem 2rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow-subtle);
-            transition: var(--transition-smooth);
-            border-bottom: 3px solid transparent;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-            border-bottom: 3px solid var(--color-accent-2);
-        }
-
-        .service-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--color-text);
-        }
-
-        /* --- WHY THERAPY SECTION --- */
-        .why-therapy {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: justify;
-            background: var(--color-accent-1);
-            padding: 4rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .why-therapy p {
-            margin-bottom: 1.5rem;
-        }
-
-        /* --- ROADMAP / TIMELINE --- */
-        .roadmap-container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            padding: 2rem 0;
-        }
-
-        .roadmap-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 20px;
-            height: 100%;
-            width: 2px;
-            background: var(--color-accent-2);
-        }
-
-        .roadmap-item {
-            position: relative;
-            padding-left: 60px;
-            margin-bottom: 3rem;
-        }
-
-        .roadmap-item::before {
-            content: '';
-            position: absolute;
-            left: 12px;
-            top: 5px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--color-white);
-            border: 3px solid var(--color-accent-2);
-            box-shadow: 0 0 0 5px rgba(207, 245, 236, 0.4);
-        }
-
-        /* --- TRUST / CV SECTION --- */
-        .cv-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .cv-list {
-            list-style: none;
-        }
-
-        .cv-list li {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-            position: relative;
-            font-weight: 300;
-            color: var(--color-text-muted);
-        }
-
-        .cv-list li::before {
-            content: '—';
-            position: absolute;
-            left: 0;
-            color: var(--color-accent-2);
-            font-weight: bold;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background-color: var(--color-text);
-            color: var(--color-white);
-            padding: 4rem 5% 2rem;
-            text-align: center;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto 3rem;
-            text-align: left;
-        }
-
-        .footer-col h4 {
-            color: var(--color-accent-2);
-            font-family: var(--font-body);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-col p {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 2rem;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
-        }
-
-        .footer-bottom a {
-            color: var(--color-accent-2);
-        }
-
-        /* --- LIGHTBOX MODAL --- */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            padding-top: 50px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 85vh;
-            object-fit: contain;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            animation: zoomIn 0.4s ease;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            color: var(--color-text);
-            font-size: 40px;
-            font-weight: 300;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .close-modal:hover { color: var(--color-accent-2); }
-
-        /* --- ANIMATIONS --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes zoomIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        /* ═══ SECTION COMMON ═══ */
+        .section { padding: 120px 0; }
+        .section-tag {
+            font-family: var(--font-body); font-size: 0.68rem; font-weight: 600;
+            letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--c-accent-deep); margin-bottom: 16px;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300; line-height: 1.2; color: var(--c-dark); margin-bottom: 20px;
+        }
+        .section-subtitle {
+            font-size: 1rem; font-weight: 300; color: var(--c-muted);
+            line-height: 1.8; max-width: 560px;
         }
 
-        /* --- MOBILE RESPONSIVENESS --- */
-        @media (max-width: 900px) {
-            .about-grid, .cv-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.2rem; }
-            nav ul { display: none; } /* Simplified for mobile - can add hamburger menu if needed in GHL */
-            .header-btn { display: none; }
-            .why-therapy { padding: 2rem; }
+        /* ═══ ABOUT ═══ */
+        .about { background: var(--c-white); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
+        .about-image-wrap { position: relative; }
+        .about-image-wrap::before {
+            content: ''; position: absolute; top: -16px; left: -16px; right: 16px; bottom: 16px;
+            border: 1px solid var(--c-border); border-radius: 4px;
+            transition: all 0.6s var(--ease-out);
+        }
+        .about-image-wrap:hover::before { top: -8px; left: -8px; }
+        .about-image {
+            width: 100%; display: block; border-radius: 4px; filter: grayscale(15%);
+            transition: all 0.8s var(--ease-out);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
+        .about-image-wrap:hover .about-image {
+            filter: grayscale(0%); transform: translate(4px, -4px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.12);
+        }
+        .about-text p { font-size: 0.95rem; color: var(--c-muted); line-height: 1.85; margin-bottom: 18px; }
+        .about-text p:first-of-type::first-line { font-weight: 500; color: var(--c-text); }
+        .about-credentials { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+        .credential-tag {
+            font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em;
+            text-transform: uppercase; padding: 8px 18px; border-radius: 2px;
+            background: var(--c-cream); color: var(--c-accent-deep); border: 1px solid var(--c-border);
+        }
+
+        /* ═══ SERVICES ═══ */
+        .services { background: var(--c-light); }
+        .services-header { text-align: center; margin-bottom: 64px; }
+        .services-header .section-subtitle { margin: 0 auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .service-card {
+            background: var(--c-white); border-radius: 4px; padding: 48px 40px;
+            border: 1px solid transparent; transition: all 0.5s var(--ease-out);
+            position: relative; overflow: hidden;
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 3px; height: 0; background: var(--c-accent-deep);
+            transition: height 0.5s var(--ease-out);
+        }
+        .service-card:hover {
+            border-color: var(--c-border); transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+        }
+        .service-card:hover::before { height: 100%; }
+        .service-num {
+            font-family: var(--font-display); font-size: 3rem; font-weight: 300;
+            color: var(--c-cream); line-height: 1; margin-bottom: 20px;
+            transition: color 0.4s;
+        }
+        .service-card:hover .service-num { color: var(--c-mint); }
+        .service-card h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; color: var(--c-dark); margin-bottom: 16px; }
+        .service-card p { font-size: 0.88rem; color: var(--c-muted); line-height: 1.8; }
+        .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+        .service-tags span {
+            font-size: 0.65rem; font-weight: 500; letter-spacing: 0.06em;
+            text-transform: uppercase; padding: 5px 12px; border-radius: 2px;
+            background: var(--c-cream); color: var(--c-accent-deep);
+        }
+
+        /* ═══ PILLARS ═══ */
+        .pillars { background: var(--c-white); }
+        .pillars-header { margin-bottom: 64px; }
+        .pillars-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+        .pillar {
+            padding: 40px 28px; text-align: center;
+            border: 1px solid var(--c-border); border-radius: 4px;
+            transition: all 0.5s var(--ease-out); position: relative;
+        }
+        .pillar:hover {
+            border-color: var(--c-accent); transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(74,124,130,0.08);
+        }
+        .pillar-icon {
+            width: 48px; height: 48px; margin: 0 auto 20px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; background: var(--c-cream); color: var(--c-accent-deep);
+        }
+        .pillar-icon svg { width: 22px; height: 22px; }
+        .pillar h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; color: var(--c-dark); margin-bottom: 12px; }
+        .pillar p { font-size: 0.82rem; color: var(--c-muted); line-height: 1.75; }
+
+        /* ═══ ROADMAP ═══ */
+        .roadmap { background: linear-gradient(170deg, var(--c-cream) 0%, var(--c-white) 100%); }
+        .roadmap-header { text-align: center; margin-bottom: 72px; }
+        .roadmap-header .section-subtitle { margin: 0 auto; }
+        .roadmap-track { position: relative; max-width: 700px; margin: 0 auto; }
+        .roadmap-track::before {
+            content: ''; position: absolute; left: 24px; top: 0; bottom: 0;
+            width: 1px; background: linear-gradient(to bottom, var(--c-accent), transparent);
+        }
+        .roadmap-step { display: flex; gap: 40px; margin-bottom: 56px; position: relative; }
+        .roadmap-step:last-child { margin-bottom: 0; }
+        .step-dot {
+            flex-shrink: 0; width: 49px; height: 49px; border-radius: 50%;
+            background: var(--c-white); border: 2px solid var(--c-accent);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-display); font-size: 1.1rem; font-weight: 500;
+            color: var(--c-accent-deep); z-index: 1; transition: all 0.4s var(--ease-out);
+        }
+        .roadmap-step:hover .step-dot {
+            background: var(--c-accent-deep); color: var(--c-white);
+            border-color: var(--c-accent-deep); transform: scale(1.08);
+        }
+        .step-content h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; color: var(--c-dark); margin-bottom: 8px; }
+        .step-content p { font-size: 0.88rem; color: var(--c-muted); line-height: 1.75; }
+
+        /* ═══ FAQ ═══ */
+        .faq { background: var(--c-white); }
+        .faq-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+        .faq-content h3 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 400; color: var(--c-dark); margin-bottom: 24px; line-height: 1.4; }
+        .faq-content p { font-size: 0.9rem; color: var(--c-muted); line-height: 1.9; margin-bottom: 16px; }
+        .faq-content p:last-child { font-family: var(--font-display); font-size: 1.05rem; font-style: italic; color: var(--c-accent-deep); }
+
+        /* ═══ REVIEWS ═══ */
+        .reviews { background: var(--c-light); overflow: hidden; }
+        .reviews-header { text-align: center; margin-bottom: 56px; }
+        .reviews-header .section-subtitle { margin: 0 auto; }
+        .reviews-track-wrapper { overflow: hidden; position: relative; }
+        .reviews-track {
+            display: flex; gap: 24px;
+            animation: scrollReviews 40s linear infinite; width: max-content;
+        }
+        .reviews-track:hover { animation-play-state: paused; }
+        @keyframes scrollReviews {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .review-card {
+            flex-shrink: 0; width: 380px; background: var(--c-white);
+            border-radius: 4px; padding: 40px 36px; border: 1px solid var(--c-border);
+            transition: all 0.4s var(--ease-out);
+        }
+        .review-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.05); }
+        .review-stars { display: flex; gap: 3px; margin-bottom: 20px; }
+        .review-stars svg { width: 14px; height: 14px; fill: var(--c-accent-deep); }
+        .review-text {
+            font-family: var(--font-display); font-size: 1.05rem; font-style: italic;
+            color: var(--c-text); line-height: 1.7; margin-bottom: 24px;
+        }
+        .review-author {
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--c-muted);
+        }
+        .review-source {
+            display: flex; align-items: center; gap: 8px; margin-top: 16px;
+            padding-top: 16px; border-top: 1px solid var(--c-border);
+        }
+        .review-source img { height: 18px; width: auto; opacity: 0.5; }
+        .review-source span { font-size: 0.68rem; color: var(--c-muted); letter-spacing: 0.05em; }
+
+        /* ═══ CREDENTIALS ═══ */
+        .credentials { background: var(--c-white); }
+        .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .cred-block { padding: 36px 32px; border: 1px solid var(--c-border); border-radius: 4px; transition: all 0.4s; }
+        .cred-block:hover { border-color: var(--c-accent); }
+        .cred-block h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; color: var(--c-dark); margin-bottom: 20px; }
+        .cred-item { padding: 12px 0; border-bottom: 1px solid var(--c-border); font-size: 0.85rem; color: var(--c-muted); line-height: 1.7; }
+        .cred-item:last-child { border-bottom: none; }
+        .cred-item strong { color: var(--c-text); font-weight: 500; display: block; }
+        .cred-item .cred-date { font-size: 0.72rem; color: var(--c-accent-deep); font-weight: 500; margin-top: 2px; }
+
+        /* ═══ CTA ═══ */
+        .cta-section {
+            background: linear-gradient(165deg, var(--c-dark) 0%, #2a3347 100%);
+            padding: 100px 0; text-align: center;
+        }
+        .cta-section .section-tag { color: var(--c-mint); }
+        .cta-section .section-title { color: var(--c-white); margin-bottom: 16px; }
+        .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.55); max-width: 500px; margin: 0 auto 40px; line-height: 1.8; }
+        .cta-section .btn-primary { background: var(--c-mint); color: var(--c-dark); box-shadow: 0 4px 20px rgba(207,245,236,0.3); }
+        .cta-section .btn-primary:hover { background: var(--c-white); box-shadow: 0 8px 30px rgba(255,255,255,0.2); }
+
+        /* ═══ FOOTER ═══ */
+        .footer { background: var(--c-dark); color: rgba(255,255,255,0.4); padding: 72px 0 40px; }
+        .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 60px; margin-bottom: 48px; }
+        .footer-brand img { height: 44px; width: auto; margin-bottom: 20px; filter: brightness(10); opacity: 0.7; }
+        .footer-brand p { font-size: 0.85rem; line-height: 1.8; max-width: 300px; }
+        .footer h4 {
+            font-family: var(--font-body); font-size: 0.68rem; font-weight: 600;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: rgba(255,255,255,0.6); margin-bottom: 20px;
+        }
+        .footer-contact-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 0.88rem; align-items: flex-start; }
+        .footer-contact-item svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 4px; color: var(--c-accent); }
+        .footer-contact-item a, .footer-contact-item span { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
+        .footer-contact-item a:hover { color: var(--c-mint); }
+        .footer-hours p { font-size: 0.88rem; line-height: 1.8; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.06); padding-top: 28px;
+            display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem;
+        }
+        .footer-bottom a { color: var(--c-accent); text-decoration: none; transition: color 0.3s; }
+        .footer-bottom a:hover { color: var(--c-mint); }
+
+        /* ═══ SCROLL REVEAL ═══ */
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (max-width: 960px) {
+            .about-grid { grid-template-columns: 1fr; gap: 48px; }
+            .about-image-wrap { max-width: 400px; margin: 0 auto; }
+            .services-grid { grid-template-columns: 1fr; }
+            .pillars-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .faq-grid { grid-template-columns: 1fr; gap: 40px; }
+            .cred-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+        }
+        @media (max-width: 600px) {
+            .section { padding: 80px 0; }
+            .container { padding: 0 20px; }
+            .pillars-grid { grid-template-columns: 1fr; }
+            .hero-content { padding: 100px 20px 60px; }
+            .service-card { padding: 32px 24px; }
+            .pillar { padding: 28px 20px; }
+            .review-card { width: 300px; padding: 28px 24px; }
+            .nav-logo img { height: 42px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <a href="#top">
-                <img src="https://github.com/agelmet/LIANERI/blob/main/SD%20logo.png?raw=true" alt="Σάντυ Λιανέρη Logo">
-            </a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#about">Η Φιλοσοφια</a></li>
-                <li><a href="#services">Υπηρεσιες</a></li>
-                <li><a href="#roadmap">Προσεγγιση</a></li>
-                <li><a href="#cv">Εμπειρια</a></li>
-            </ul>
-        </nav>
-        <a href="https://www.instadoctor.gr/doctor/lianeri-sandy" class="btn header-btn" target="_blank">Κλειστε Ραντεβου</a>
-    </header>
+<!-- NAV -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="#top" class="nav-logo" aria-label="Αρχική"><img src="https://github.com/agelmet/LIANERI/blob/main/SD%20logo.png?raw=true" alt="Sandy Lianeri Logo"></a>
+        <ul class="nav-links">
+            <li><a href="#about">Ποια Ειμαι</a></li>
+            <li><a href="#services">Υπηρεσιες</a></li>
+            <li><a href="#pillars">Προσεγγιση</a></li>
+            <li><a href="#roadmap">Πορεια</a></li>
+            <li><a href="#faq">Συχνες Ερωτησεις</a></li>
+            <li><a href="https://www.instadoctor.gr/doctor/lianeri-sandy" target="_blank" rel="noopener" class="nav-cta">Κλειστε Ραντεβου</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#about" onclick="closeMobile()">Ποια Είμαι</a>
+    <a href="#services" onclick="closeMobile()">Υπηρεσίες</a>
+    <a href="#pillars" onclick="closeMobile()">Προσέγγιση</a>
+    <a href="#roadmap" onclick="closeMobile()">Πορεία</a>
+    <a href="#faq" onclick="closeMobile()">Συχνές Ερωτήσεις</a>
+    <a href="https://www.instadoctor.gr/doctor/lianeri-sandy" target="_blank" rel="noopener" style="color:var(--c-accent-deep);">Κλείστε Ραντεβού</a>
+</div>
 
-    <section id="top" class="hero">
-        <div class="hero-content">
-            <h1>Γνωσιακή Συμπεριφορική Θεραπεία &amp; Διασυνδετική Ψυχιατρική:<br>Γεφυρώνοντας το Σώμα με την Ψυχή</h1>
-            <p>Ένας ασφαλής χώρος όπου η επιστήμη συναντά την ενσυναίσθηση. Αγκαλιάστε κάθε πλευρά σας και βρείτε την εσωτερική σας αρμονία.</p>
-            <a href="https://www.instadoctor.gr/doctor/lianeri-sandy" class="btn" target="_blank">Ξεκινηστε το Ταξιδι Σας</a>
+<!-- HERO -->
+<section class="hero" id="top">
+    <div class="hero-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="hero-content">
+        <p class="hero-tag">Σάντυ Λιανέρη — Ψυχολόγος · Ψυχοθεραπεύτρια</p>
+        <h1 class="hero-title">Γνωσιακή Συμπεριφορική Θεραπεία &amp; Διασυνδετική Ψυχιατρική: <em>Γεφυρώνοντας το Σώμα με την Ψυχή</em></h1>
+        <p class="hero-subtitle">Ένας ασφαλής, επιστημονικά τεκμηριωμένος χώρος όπου η ψυχολογική και η σωματική σας υγεία αντιμετωπίζονται ως ένα αδιαίρετο σύνολο.</p>
+        <div class="hero-actions">
+            <a href="https://www.instadoctor.gr/doctor/lianeri-sandy" target="_blank" rel="noopener" class="btn-primary">Κλείστε Ραντεβού <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="#about" class="btn-secondary">Γνωρίστε με</a>
         </div>
-    </section>
+    </div>
+    <div class="hero-scroll"><span></span></div>
+</section>
 
-    <section id="about" class="bg-white">
+<!-- ABOUT -->
+<section class="section about" id="about">
+    <div class="container">
         <div class="about-grid">
-            <div class="about-text reveal">
-                <div class="section-header" style="text-align: left;">
-                    <h2>Γνωρίστε Με</h2>
-                </div>
-                <p>Είμαι ψυχολόγος με άδεια ασκήσεως επαγγέλματος (18-2-2019, Αρ.πρωτ.: 1998). Ολοκλήρωσα τις προπτυχιακές μου σπουδές στο αντικείμενο της Ψυχολογίας στο Πάντειο Πανεπιστήμιο το 2017. Έκτοτε συνέχισα την επιπλέον εκπαίδευση μέσω σεμιναρίων και συνεδρίων που αφορούσαν τον χώρο της ψυχικής υγείας. Σημαντικά σημεία ενδιαφέροντος αποτέλεσαν τα μοντέλα ψυχοθεραπείας, η ψυχοπαθολογία ενηλίκων-εφήβων και παιδιών και η χορήγηση ψυχομετρικών εργαλείων.</p>
-                <p>Στη συνέχεια ξεκίνησα να παρακολουθώ το μεταπτυχιακό πρόγραμμα της Ιατρικής Σχολής του Εθνικού Καποδιστριακού Πανεπιστημίου Αθηνών με τίτλο "Διασυνδετική Ψυχιατρική: απαρτιωμένη φροντίδα σωματικής και ψυχικής υγείας", το οποίο και ολοκλήρωσα το 2022. Ιδιαίτερο ενδιαφέρον αποτελούσε η σύνδεση της ψυχολογικής σφαίρας με την σωματική διάσταση και η αλληλεπίδραση μεταξύ τους.</p>
-                <p>Παράλληλα, εκπαιδεύτηκα στην ψυχοθεραπευτική προσέγγιση της Γνωσιακής-Συμπεριφορικής ψυχοθεραπείας στο Κέντρο Εφαρμοσμένης Συμβουλευτικής και Ψυχοθεραπείας. Έχοντας εργαστεί βαθιά με τις ανάγκες της παιδικής ηλικίας, οδηγήθηκα στην υποστήριξη ενηλίκων – ανθρώπων που κάποτε υπήρξαν παιδιά με ανάγκες οι οποίες εμφανίζονται ξανά στην ενήλικη ζωή τους. Στόχος μου είναι να προσφέρω συνεδρίες που εστιάζουν στην ψυχολογική και σωματική ευεξία, χτίζοντας μια αρμονική καθημερινότητα.</p>
+            <div class="about-image-wrap reveal">
+                <img src="https://github.com/agelmet/LIANERI/blob/main/herrr.jpg?raw=true" alt="Σάντυ Λιανέρη" class="about-image">
             </div>
-            <div class="about-image-wrapper reveal">
-                <img src="https://github.com/agelmet/LIANERI/blob/main/herrr.jpg?raw=true" alt="Σάντυ Λιανέρη" class="about-image lightbox-trigger">
+            <div class="about-text">
+                <p class="section-tag reveal">Ποια Είμαι</p>
+                <h2 class="section-title reveal reveal-delay-1">Σάντυ Λιανέρη</h2>
+                <p class="reveal reveal-delay-2">Είμαι αδειούχος Ψυχολόγος – Ψυχοθεραπεύτρια (Αρ. Αδείας: 1998, 18/02/2019). Ολοκλήρωσα τις προπτυχιακές μου σπουδές στην Ψυχολογία στο Πάντειο Πανεπιστήμιο και στη συνέχεια εξειδικεύτηκα μέσω του μεταπτυχιακού προγράμματος «Διασυνδετική Ψυχιατρική: Απαρτιωμένη Φροντίδα Σωματικής και Ψυχικής Υγείας» στην Ιατρική Σχολή του Εθνικού και Καποδιστριακού Πανεπιστημίου Αθηνών.</p>
+                <p class="reveal reveal-delay-2">Η κλινική μου εξειδίκευση βασίζεται στη Γνωσιακή – Συμπεριφορική Ψυχοθεραπεία (CBT), την οποία σπούδασα στο Κέντρο Εφαρμοσμένης Ψυχοθεραπείας και Συμβουλευτικής (Κ.Ε.ΨΥ.ΣΥ.). Αυτό που με κάνει να ξεχωρίζω είναι η ισχυρή νοσοκομειακή μου εμπειρία — κλινική άσκηση στο Π.Γ.Ν. «Αττικόν» και στη Νευρολογική Κλινική του Ναυτικού Νοσοκομείου Αθηνών, αναλαμβάνοντας ψυχομετρικές αξιολογήσεις, νευροψυχολογική αξιολόγηση και νοητική ενδυνάμωση.</p>
+                <p class="reveal reveal-delay-3">Η επαγγελματική μου πορεία ξεκίνησε από τη δουλειά με παιδιά και εφήβους, εμπειρία που με οδήγησε στην κατανόηση του πώς οι ανάγκες εκείνης της ηλικίας εμφανίζονται ξανά στην ενήλικη ζωή. Σήμερα, εστιάζω σε ατομικές ψυχοθεραπευτικές συνεδρίες με ενήλικες — δια ζώσης ή διαδικτυακά — με στόχο τη σύνδεση ψυχολογικής και σωματικής ευεξίας, βοηθώντας τους θεραπευόμενους να χτίσουν μια αρμονική και λειτουργική καθημερινότητα.</p>
+                <div class="about-credentials reveal reveal-delay-3">
+                    <span class="credential-tag">CBT</span>
+                    <span class="credential-tag">Ιατρική ΕΚΠΑ</span>
+                    <span class="credential-tag">Πάντειο Πανεπιστήμιο</span>
+                    <span class="credential-tag">Αρ. Αδείας 1998</span>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="services" class="bg-light">
-        <div class="section-header reveal">
-            <h2>Υπηρεσίες</h2>
-            <p>Εξειδικευμένες προσεγγίσεις για την ψυχική και σωματική σας ευεξία</p>
+<!-- SERVICES -->
+<section class="section services" id="services">
+    <div class="container">
+        <div class="services-header">
+            <p class="section-tag reveal">Εξειδικευμένες Υπηρεσίες</p>
+            <h2 class="section-title reveal reveal-delay-1">Πώς Μπορώ να Βοηθήσω</h2>
+            <p class="section-subtitle reveal reveal-delay-2">Κάθε θεραπευτική πορεία σχεδιάζεται μοναδικά, με βάση τις δικές σας ανάγκες και τον δικό σας ρυθμό.</p>
         </div>
         <div class="services-grid">
-            
             <div class="service-card reveal">
-                <h3>Διαχείριση Άγχους, Φοβιών &amp; Κρίσεων Πανικού (CBT)</h3>
-                <p>Το άγχος και οι κρίσεις πανικού συχνά εκδηλώνονται με έντονα σωματικά συμπτώματα. Μέσω της Γνωσιακής Συμπεριφορικής Θεραπείας (CBT), μαθαίνετε πώς οι σκέψεις πυροδοτούν τον φόβο. Σας παρέχονται πρακτικά εργαλεία για να ελέγχετε τις αντιδράσεις σας και να ηρεμείτε το νευρικό σας σύστημα στο «εδώ και τώρα».</p>
+                <div class="service-num">01</div>
+                <h3>Διαχείριση Άγχους, Φοβιών &amp; Κρίσεων Πανικού</h3>
+                <p>Το άγχος και οι κρίσεις πανικού συχνά εκδηλώνονται με έντονα σωματικά συμπτώματα. Μέσω της Γνωσιακής Συμπεριφορικής Θεραπείας (CBT), η οποία είναι η πλέον ενδεδειγμένη μέθοδος για τις αγχώδεις διαταραχές, μαθαίνετε πώς οι σκέψεις πυροδοτούν τον φόβο. Σας παρέχονται πρακτικά εργαλεία για να ελέγχετε τις αντιδράσεις σας, να αποδυναμώνετε τις ειδικές φοβίες και να ηρεμείτε το νευρικό σύστημα στο «εδώ και τώρα».</p>
+                <div class="service-tags"><span>Stress</span><span>Ειδικές Φοβίες</span><span>Πανικός</span><span>CBT</span></div>
             </div>
-
-            <div class="service-card reveal">
-                <h3>Κατάθλιψη, Διαπροσωπικές Σχέσεις &amp; Αυτοεκτίμηση</h3>
-                <p>Η θλίψη και οι δυσκολίες στις σχέσεις συχνά πηγάζουν από έναν σκληρό εσωτερικό κριτή. Δουλεύουμε συνεργατικά για να αντικαταστήσουμε αυτά τα αρνητικά μοτίβα με υγιείς πεποιθήσεις. Στόχος η ενίσχυση της αυτο-αποτελεσματικότητας, ώστε να διεκδικείτε υγιείς σχέσεις και επάρκεια στην καθημερινότητα.</p>
+            <div class="service-card reveal reveal-delay-1">
+                <div class="service-num">02</div>
+                <h3>Κατάθλιψη, Σχέσεις &amp; Αυτοεκτίμηση</h3>
+                <p>Η θλίψη, η κατάθλιψη και οι δυσκολίες στις διαπροσωπικές σχέσεις συχνά πηγάζουν από έναν σκληρό εσωτερικό κριτή. Δουλεύουμε συνεργατικά για να αντικαταστήσουμε τα αρνητικά μοτίβα με υγιείς, ρεαλιστικές πεποιθήσεις. Στόχος είναι να ενισχύσουμε την αυτοεκτίμηση και την «αυτο-αποτελεσματικότητά» σας — την πίστη δηλαδή στις δικές σας ικανότητες — ώστε να διεκδικείτε υγιείς σχέσεις και να νιώθετε επάρκεια στην καθημερινότητα.</p>
+                <div class="service-tags"><span>Κατάθλιψη</span><span>Αυτοεκτίμηση</span><span>Σχέσεις</span></div>
             </div>
-
-            <div class="service-card reveal">
-                <h3>Διασυνδετική Φροντίδα: Σωματική &amp; Ψυχική Ευεξία</h3>
-                <p>Το σώμα και το μυαλό είναι συγκοινωνούντα δοχεία. Όταν υποφέρουμε ψυχικά, το σώμα συχνά «μιλάει» μέσω ψυχοσωματικών συμπτωμάτων. Αντλώντας από την εμπειρία στη Διασυνδετική Ψυχιατρική (ΕΚΠΑ), αναγνωρίζουμε και φροντίζουμε αυτή τη σύνδεση, προάγοντας τη συνολική σας υγεία.</p>
+            <div class="service-card reveal reveal-delay-2">
+                <div class="service-num">03</div>
+                <h3>Διασυνδετική Φροντίδα: Σώμα &amp; Ψυχή</h3>
+                <p>Το σώμα και το μυαλό είναι συγκοινωνούντα δοχεία. Όταν υποφέρουμε ψυχικά, το σώμα συχνά «μιλάει» μέσω ψυχοσωματικών συμπτωμάτων, ενώ οι χρόνιες σωματικές παθήσεις επιβαρύνουν αντίστοιχα την ψυχολογία. Αντλώντας από την εξειδίκευσή μου στη Διασυνδετική Ψυχιατρική, σας βοηθώ να αναγνωρίσετε και να φροντίσετε αυτή τη σύνδεση, προάγοντας τη συνολική σας υγεία.</p>
+                <div class="service-tags"><span>Ψυχοσωματικά</span><span>Ολιστική Φροντίδα</span><span>Ιατρική Σχολή ΕΚΠΑ</span></div>
             </div>
-
-            <div class="service-card reveal">
-                <h3>Ευέλικτες Συνεδρίες (Online &amp; Δια Ζώσης)</h3>
-                <p>Οι συνεδρίες πραγματοποιούνται κατόπιν ραντεβού, με μεγάλη ευελιξία ωραρίου για να προσαρμόζονται στο πρόγραμμά σας. Παρέχεται δυνατότητα διαδικτυακής ψυχοθεραπείας (Online) για όλη την Ελλάδα και το εξωτερικό, καθώς και δια ζώσης συνεδριών σε συνεργαζόμενο χώρο στην Αθήνα.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="bg-white">
-        <div class="section-header reveal">
-            <h2>Πολλοί ρωτούν... γιατί να ξεκινήσει κάποιος ψυχοθεραπεία;</h2>
-        </div>
-        <div class="why-therapy reveal">
-            <p>Η απορία αποτελεί αφετηρία του ταξιδιού. Βλέπουμε άτομα τα οποία ξεκινούν ή έχουν ολοκληρώσει ψυχοθεραπευτικές συνεδρίες. Τί μας κάνει να αναρωτηθούμε στο τί κερδίζει το άτομο; Όταν διερωτώμαστε, συχνά, αναζητούμε ένα δικό μας προσωπικό νόημα: Πώς θα ήταν αν εγώ ξεκινούσα; Τι θα «ανακάλυπτα» για τον εαυτό μου;</p>
-            <p>Το κάθε άτομο γνωρίζει καλύτερα τον εαυτό του. Στο ψυχοθεραπευτικό δωμάτιο, το άτομο συνομιλεί με τον εαυτό του, βρίσκει λύσεις, απορρίπτει επιλογές ή δημιουργεί νέες, λαμβάνοντας εναύσματα από τον θεραπευτή. Γνωρίζει την πραγματικότητά του και δημιουργεί νοητά τη μελλοντική. Ανατρέχει στο παρελθόν, βιώνει το παρόν και ονειρεύεται το μέλλον.</p>
-            <p>Στόχος είναι να βγει στην επιφάνεια η ιστορία του ατόμου, μέσω της ένωσης των κομματιών του προσωπικού «παζλ». Το ζήτημα είναι το «γιατί τώρα». Ίσως ο λόγος να προκύπτει από κάτι στη βιωμένη πραγματικότητα που ενεργοποίησε αυτή την ανάγκη για επανένωση. Η επιλογή εξαρτάται από την ίδια την απορία.</p>
-        </div>
-    </section>
-
-    <section id="roadmap" class="bg-light">
-        <div class="section-header reveal">
-            <h2>Η Πορεία της Θεραπείας</h2>
-            <p>Μια δομημένη διαδρομή προς την εσωτερική ολοκλήρωση</p>
-        </div>
-        <div class="roadmap-container">
-            <div class="roadmap-item reveal">
-                <h3>Βήμα 1: Επικοινωνία &amp; Ραντεβού</h3>
-                <p>Η πρώτη σας κίνηση φροντίδας. Επικοινωνούμε για να ορίσουμε την ημέρα και την ώρα που εξυπηρετεί το δικό σας πρόγραμμα, θέτοντας τα θεμέλια της συνεργασίας μας.</p>
-            </div>
-            <div class="roadmap-item reveal">
-                <h3>Βήμα 2: Πρώτη Αξιολόγηση</h3>
-                <p>Γνωριμία σε ένα απόλυτα ασφαλές περιβάλλον. Ακούμε με προσοχή τις ανάγκες και τους προβληματισμούς σας, χωρίς καμία κριτική, κατανοώντας το αίτημά σας.</p>
-            </div>
-            <div class="roadmap-item reveal">
-                <h3>Βήμα 3: Εξατομικευμένο Πλάνο</h3>
-                <p>Σχεδιάζουμε τη θεραπευτική προσέγγιση (βασισμένη στη CBT και τη διασυνδετική προσέγγιση) που ταιριάζει αποκλειστικά στη δική σας ιδιοσυγκρασία και στους στόχους σας.</p>
-            </div>
-            <div class="roadmap-item reveal">
-                <h3>Βήμα 4: Επούλωση &amp; Ανάπτυξη</h3>
-                <p>Με σταθερά βήματα, δομημένα εργαλεία και απόλυτη ενσυναίσθηση, προχωράμε προς την αυτογνωσία, την ανθεκτικότητα και την αρμονική σύνθεση του εαυτού σας.</p>
+            <div class="service-card reveal reveal-delay-3">
+                <div class="service-num">04</div>
+                <h3>Ευέλικτες Συνεδρίες — Online &amp; Δια Ζώσης</h3>
+                <p>Οι συνεδρίες πραγματοποιούνται κατόπιν ραντεβού, με μεγάλη ευελιξία ωραρίου (Δευτέρα–Παρασκευή, 11:00–21:00) για να προσαρμόζονται στο πρόγραμμά σας. Παρέχεται η δυνατότητα διαδικτυακής ψυχοθεραπείας (Online) για όλη την Ελλάδα και το εξωτερικό, καθώς και δια ζώσης συνεδριών σε συνεργαζόμενο χώρο στην Αθήνα.</p>
+                <div class="service-tags"><span>Online</span><span>Δια Ζώσης</span><span>Αθήνα</span><span>Εξωτερικό</span></div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="cv" class="bg-white">
-        <div class="section-header reveal">
-            <h2>Η Θεραπευτική μου Ταυτότητα</h2>
-            <p>Τι κάνει την προσέγγισή μου ξεχωριστή</p>
+<!-- PILLARS -->
+<section class="section pillars" id="pillars">
+    <div class="container">
+        <div class="pillars-header">
+            <p class="section-tag reveal">Η Θεραπευτική μου Ταυτότητα</p>
+            <h2 class="section-title reveal reveal-delay-1">Τι Κάνει την Προσέγγισή μου Ξεχωριστή</h2>
         </div>
-        <div class="cv-grid">
-            <div class="reveal">
-                <h3>Ακαδημαϊκό Κύρος &amp; Κλινική Πρακτική</h3>
-                <p>Η κατοχή μεταπτυχιακού στη Διασυνδετική Ψυχιατρική από την Ιατρική Σχολή Αθηνών εγγυάται μια σπάνια, βαθιά επιστημονική κατανόηση της σχέσης μεταξύ σωματικής νόσου και ψυχικής υγείας. Η κλινική μου θητεία σε βαριά πλαίσια (Π.Γ.Ν. «Αττικόν», Ναυτικό Νοσοκομείο) και η χρήση νευροψυχολογικών εργαλείων, διασφαλίζουν εγκυρότητα και κλινική ακρίβεια.</p>
-                <br>
-                <h3>Πρακτική Μεθοδολογία &amp; Ψυχοπαθολογία</h3>
-                <p>Η Γνωσιακή Συμπεριφορική Θεραπεία δεν μένει σε θεωρητικές αναλύσεις, αλλά σας εφοδιάζει με πραγματικά εργαλεία. Η συνεχής εκπαίδευση σε κλινικές δεξιότητες ψυχοπαθολογίας επιτρέπει τον σχεδιασμό του ασφαλέστερου θεραπευτικού πλάνου.</p>
+        <div class="pillars-grid">
+            <div class="pillar reveal">
+                <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg></div>
+                <h3>Ακαδημαϊκό Κύρος Ιατρικής ΕΚΠΑ</h3>
+                <p>Μεταπτυχιακό στη Διασυνδετική Ψυχιατρική από την Ιατρική Σχολή Αθηνών — σπάνια επιστημονική κατανόηση της σχέσης σωματικής νόσου και ψυχικής υγείας.</p>
             </div>
-            <div class="reveal">
-                <h3>Σπουδές &amp; Εμπειρία</h3>
-                <ul class="cv-list">
-                    <li>Μεταπτυχιακό στη "Διασυνδετική Ψυχιατρική: Απαρτιωμένη Φροντίδα Σωματικής και Ψυχικής Υγείας", Ιατρική Σχολή, ΕΚΠΑ (2019 - 2022)</li>
-                    <li>Πτυχίο Ψυχολογίας, Πάντειο Πανεπιστήμιο (2013 - 2017)</li>
-                    <li>Εξειδίκευση στη Γνωσιακή - Συμπεριφορική Ψυχοθεραπεία, Κ.Ε.ΨΥ.ΣΥ. (2020 - 2022)</li>
-                    <li>Εξωτερική Συνεργάτις, Ιδιωτικά γραφεία (2022 - σήμερα)</li>
-                    <li>Ψυχολόγος, Κέντρο Ειδικών Θεραπειών (2021 - 2022)</li>
-                    <li>Πρακτική άσκηση, Ψυχιατρικό Τμήμα, Π.Γ.Ν. "Αττικόν" (2020)</li>
-                    <li>Συμμετοχή με προφορικές παρουσιάσεις σε Πανελλήνια και Ευρωπαϊκά Συνέδρια (EABA, ΕΚΑΣ).</li>
-                </ul>
+            <div class="pillar reveal reveal-delay-1">
+                <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
+                <h3>Νοσοκομειακή Εμπειρία &amp; Αξιολόγηση</h3>
+                <p>Κλινική θητεία στο Π.Γ.Ν. «Αττικόν» και στο Ναυτικό Νοσοκομείο, με χρήση ψυχομετρικών και νευροψυχολογικών εργαλείων.</p>
+            </div>
+            <div class="pillar reveal reveal-delay-2">
+                <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+                <h3>Πρακτική CBT Μεθοδολογία</h3>
+                <p>Στοχευμένη, δομημένη θεραπεία που σας εφοδιάζει με πραγματικά εργαλεία για ορατή αλλαγή στην καθημερινότητά σας.</p>
+            </div>
+            <div class="pillar reveal reveal-delay-3">
+                <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div>
+                <h3>Βαθιά Γνώση Ψυχοπαθολογίας</h3>
+                <p>Συνεχής εκπαίδευση μέσω σεμιναρίων «Π. Ουλής» — ικανότητα να διακρίνω κάθε απόχρωση συμπτώματος και να σχεδιάζω ασφαλή θεραπευτικά πλάνα.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer>
+<!-- ROADMAP -->
+<section class="section roadmap" id="roadmap">
+    <div class="container">
+        <div class="roadmap-header">
+            <p class="section-tag reveal">Η Θεραπευτική Πορεία</p>
+            <h2 class="section-title reveal reveal-delay-1">Τα Βήματα της Συνεργασίας μας</h2>
+            <p class="section-subtitle reveal reveal-delay-2">Μια δομημένη αλλά ευέλικτη διαδρομή, σχεδιασμένη γύρω από εσάς.</p>
+        </div>
+        <div class="roadmap-track">
+            <div class="roadmap-step reveal">
+                <div class="step-dot">1</div>
+                <div class="step-content">
+                    <h3>Πρώτη Επικοινωνία</h3>
+                    <p>Η αρχή γίνεται με ένα τηλεφώνημα ή ένα μήνυμα. Ορίζουμε μαζί τη μέρα και ώρα που σας εξυπηρετεί, χωρίς καμία δέσμευση.</p>
+                </div>
+            </div>
+            <div class="roadmap-step reveal reveal-delay-1">
+                <div class="step-dot">2</div>
+                <div class="step-content">
+                    <h3>Αξιολόγηση &amp; Γνωριμία</h3>
+                    <p>Στην πρώτη συνεδρία γνωριζόμαστε σε ασφαλές πλαίσιο. Ακούω τις ανάγκες σας, αξιολογώ τη δυσκολία και χτίζουμε μαζί τη βάση της θεραπευτικής σχέσης.</p>
+                </div>
+            </div>
+            <div class="roadmap-step reveal reveal-delay-2">
+                <div class="step-dot">3</div>
+                <div class="step-content">
+                    <h3>Εξατομικευμένο Θεραπευτικό Πλάνο</h3>
+                    <p>Σχεδιάζω τη θεραπευτική προσέγγιση αποκλειστικά για εσάς, αντλώντας εργαλεία από τη Γνωσιακή Συμπεριφορική Θεραπεία και τη Διασυνδετική Ψυχιατρική.</p>
+                </div>
+            </div>
+            <div class="roadmap-step reveal reveal-delay-3">
+                <div class="step-dot">4</div>
+                <div class="step-content">
+                    <h3>Θεραπευτική Εργασία &amp; Πρόοδος</h3>
+                    <p>Σε κάθε συνεδρία δουλεύουμε με συγκεκριμένους στόχους. Αξιολογούμε τακτικά την πρόοδο και προσαρμόζουμε το πλάνο, ώστε τα αποτελέσματα να είναι ουσιαστικά και μετρήσιμα.</p>
+                </div>
+            </div>
+            <div class="roadmap-step reveal reveal-delay-4">
+                <div class="step-dot">5</div>
+                <div class="step-content">
+                    <h3>Αυτονομία &amp; Ολοκλήρωση</h3>
+                    <p>Στόχος δεν είναι η εξάρτηση, αλλά η αυτονομία σας. Η θεραπεία ολοκληρώνεται όταν νιώθετε έτοιμοι να διαχειρίζεστε τις προκλήσεις με τα εργαλεία που αποκτήσατε.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq" id="faq">
+    <div class="container">
+        <div class="faq-grid">
+            <div>
+                <p class="section-tag reveal">Πολλοί Ρωτούν...</p>
+                <h2 class="section-title reveal reveal-delay-1">Γιατί να ξεκινήσει κάποιος ψυχοθεραπεία;</h2>
+            </div>
+            <div class="faq-content">
+                <p class="reveal">Η απορία αποτελεί αφετηρία του ταξιδιού. Συχνά αναρωτιόμαστε γιατί κάποιοι γύρω μας ξεκινούν, κάνουν ή ολοκληρώνουν ψυχοθεραπεία. Τι κερδίζει το άτομο; Γιατί μας αφορά;</p>
+                <p class="reveal reveal-delay-1">Όταν διερωτώμαστε, αναζητούμε προσωπικό νόημα στην απάντηση. Πώς θα ήταν αν εγώ ξεκινούσα; Τι θα ανακάλυπτα για τον εαυτό μου, τους άλλους ή τον κόσμο; Πώς θα λειτουργούσε στην καθημερινότητά μου;</p>
+                <p class="reveal reveal-delay-2">Στο ψυχοθεραπευτικό δωμάτιο, το άτομο συνομιλεί με τον εαυτό του — αναρωτιέται, βρίσκει λύσεις, απορρίπτει επιλογές ή δημιουργεί νέες, λαμβάνοντας εναύσματα από τον θεραπευτή. Γνωρίζει βιωματικά τις ανάγκες που καλύφθηκαν ή έμειναν ανεκπλήρωτες, τα συναισθήματα που εκφράστηκαν ή σιωπήθηκαν. Μέσω της ψυχοθεραπείας, ο φακός στρέφεται προς τα μέσα — και ο στόχος είναι να βγει στην επιφάνεια η ιστορία του ατόμου, μέσα από την ένωση των κομματιών του προσωπικού «παζλ».</p>
+                <p class="reveal reveal-delay-3">Η επιλογή να ξεκινήσει κανείς ψυχοθεραπεία εξαρτάται τελικά από τη δική του απορία — και η απορία, από μόνη της, είναι ήδη η αρχή.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section reviews" id="reviews">
+    <div class="container">
+        <div class="reviews-header">
+            <p class="section-tag reveal">Εμπειρίες Θεραπευομένων</p>
+            <h2 class="section-title reveal reveal-delay-1">Η Εμπιστοσύνη σας Μιλάει</h2>
+        </div>
+    </div>
+    <div class="reviews-track-wrapper">
+        <div class="reviews-track" id="reviewsTrack">
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Η κα. Λιανέρη με βοήθησε να κατανοήσω τα μοτίβα σκέψης που με κρατούσαν πίσω. Η προσέγγισή της είναι ζεστή αλλά και εξαιρετικά δομημένη.»</p><p class="review-author">Μαρία Κ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Ένιωσα ασφάλεια από την πρώτη στιγμή. Η θεραπεία μου έδωσε εργαλεία που χρησιμοποιώ καθημερινά — για τις σχέσεις μου, την εργασία μου, τον εαυτό μου.»</p><p class="review-author">Δημήτρης Π.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Οι online συνεδρίες ήταν εξίσου αποτελεσματικές. Η κα. Λιανέρη έχει τη σπάνια ικανότητα να σε κάνει να νιώσεις ότι ακούγεσαι πραγματικά.»</p><p class="review-author">Ελένη Σ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Χάρη στη δουλειά μας μαζί, κατάφερα να διαχειριστώ τις κρίσεις πανικού που με ταλαιπωρούσαν χρόνια. Η μέθοδος CBT λειτουργεί πραγματικά.»</p><p class="review-author">Κώστας Α.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Η διασυνδετική προσέγγιση ήταν αποκαλυπτική. Κατάλαβα πώς το χρόνιο πρόβλημα υγείας μου επηρεάζει τη ψυχολογία μου — και αντίστροφα.»</p><p class="review-author">Νίκη Μ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <!-- Duplicate for infinite scroll -->
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Η κα. Λιανέρη με βοήθησε να κατανοήσω τα μοτίβα σκέψης που με κρατούσαν πίσω. Η προσέγγισή της είναι ζεστή αλλά και εξαιρετικά δομημένη.»</p><p class="review-author">Μαρία Κ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Ένιωσα ασφάλεια από την πρώτη στιγμή. Η θεραπεία μου έδωσε εργαλεία που χρησιμοποιώ καθημερινά — για τις σχέσεις μου, την εργασία μου, τον εαυτό μου.»</p><p class="review-author">Δημήτρης Π.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Οι online συνεδρίες ήταν εξίσου αποτελεσματικές. Η κα. Λιανέρη έχει τη σπάνια ικανότητα να σε κάνει να νιώσεις ότι ακούγεσαι πραγματικά.»</p><p class="review-author">Ελένη Σ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Χάρη στη δουλειά μας μαζί, κατάφερα να διαχειριστώ τις κρίσεις πανικού που με ταλαιπωρούσαν χρόνια. Η μέθοδος CBT λειτουργεί πραγματικά.»</p><p class="review-author">Κώστας Α.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+            <div class="review-card"><div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="review-text">«Η διασυνδετική προσέγγιση ήταν αποκαλυπτική. Κατάλαβα πώς το χρόνιο πρόβλημα υγείας μου επηρεάζει τη ψυχολογία μου — και αντίστροφα.»</p><p class="review-author">Νίκη Μ.</p><div class="review-source"><img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime"><span>doctoranytime.gr</span></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="section credentials" id="credentials">
+    <div class="container">
+        <div class="pillars-header">
+            <p class="section-tag reveal">Βιογραφικό</p>
+            <h2 class="section-title reveal reveal-delay-1">Σπουδές &amp; Επαγγελματική Πορεία</h2>
+        </div>
+        <div class="cred-grid">
+            <div class="cred-block reveal">
+                <h3>Σπουδές</h3>
+                <div class="cred-item"><strong>MSc Διασυνδετική Ψυχιατρική: Απαρτιωμένη Φροντίδα Σωματικής &amp; Ψυχικής Υγείας</strong>Ιατρική Σχολή, Εθνικό &amp; Καποδιστριακό Πανεπιστήμιο Αθηνών<div class="cred-date">2019 – 2022</div></div>
+                <div class="cred-item"><strong>Εξειδίκευση στη Γνωσιακή – Συμπεριφορική Ψυχοθεραπεία</strong>Κέντρο Εφαρμοσμένης Ψυχοθεραπείας &amp; Συμβουλευτικής (Κ.Ε.ΨΥ.ΣΥ.)<div class="cred-date">2020 – 2022</div></div>
+                <div class="cred-item"><strong>Πτυχίο Ψυχολογίας</strong>Τμήμα Ψυχολογίας, Πάντειο Πανεπιστήμιο<div class="cred-date">2013 – 2017</div></div>
+            </div>
+            <div class="cred-block reveal reveal-delay-1">
+                <h3>Επαγγελματική Εμπειρία</h3>
+                <div class="cred-item"><strong>Εξωτερική Συνεργάτις — Ιδιωτικά Γραφεία</strong>Ατομικές ψυχοθεραπευτικές συνεδρίες ενηλίκων<div class="cred-date">2022 – Σήμερα</div></div>
+                <div class="cred-item"><strong>Ψυχολόγος — Κέντρο Ειδικών Θεραπειών</strong>Κατ' οίκον υπηρεσίες ψυχοθεραπείας σε παιδιά και ενήλικες<div class="cred-date">2021 – 2022</div></div>
+                <div class="cred-item"><strong>Κλινική Άσκηση — Π.Γ.Ν. «Αττικόν»</strong>Ψυχιατρικό Τμήμα, ψυχομετρικές αξιολογήσεις<div class="cred-date">2020</div></div>
+                <div class="cred-item"><strong>Εθελοντική Εργασία</strong>Ελληνικό Ινστιτούτο Λογικοθυμικής &amp; CBT / Πάντειο Πανεπιστήμιο<div class="cred-date">2016 – 2019</div></div>
+            </div>
+        </div>
+        <div style="margin-top:40px;">
+            <div class="cred-block reveal">
+                <h3>Συμμετοχή σε Συνέδρια</h3>
+                <div class="cred-item"><strong>9th Conference — European Association for Behaviour Analysis (EABA)</strong>Προφορική παρουσίαση: «Perceiving dysmorphia: Differential reinforcement and punishment of self-discriminations of relative body mass» — University of Applied Sciences Würzburg-Schweinfurt, Γερμανία<div class="cred-date">Σεπτέμβριος 2018</div></div>
+                <div class="cred-item"><strong>3ο Πανελλήνιο Συνέδριο Ελληνικής Κοινότητας Ανάλυσης Συμπεριφοράς</strong>Προφορική παρουσίαση: «Διαστρεβλωμένη σωματική αυτοεικόνα: Η επίδραση της διαφορικής ενίσχυσης και τιμωρίας στην αυτοεκτίμηση του σωματικού βάρους» — Πάντειο Πανεπιστήμιο, Αθήνα<div class="cred-date">Δεκέμβριος 2017</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <p class="section-tag reveal">Το Πρώτο Βήμα</p>
+        <h2 class="section-title reveal reveal-delay-1">Η Αλλαγή Ξεκινά με μια Απόφαση</h2>
+        <p class="reveal reveal-delay-2">Επικοινωνήστε μαζί μου για να ορίσουμε την πρώτη σας συνεδρία. Κάθε πορεία είναι μοναδική — ας ξεκινήσουμε τη δική σας.</p>
+        <a href="https://www.instadoctor.gr/doctor/lianeri-sandy" target="_blank" rel="noopener" class="btn-primary reveal reveal-delay-3">Κλείστε Ραντεβού <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="contact">
+    <div class="container">
         <div class="footer-grid">
-            <div class="footer-col">
-                <h4>Στοιχεία Επικοινωνίας</h4>
-                <p>Διεύθυνση: Βουτσινά 89, Χολαργός, Αττική</p>
-                <p>Τηλέφωνο: <a href="tel:+306978902120">+30 697 890 2120</a></p>
-                <p>Email: <a href="mailto:slianeri.psy@gmail.com">slianeri.psy@gmail.com</a></p>
+            <div class="footer-brand">
+                <img src="https://github.com/agelmet/LIANERI/blob/main/SD%20logo.png?raw=true" alt="Sandy Lianeri Logo">
+                <p>Σάντυ Λιανέρη — Ψυχολόγος, Ψυχοθεραπεύτρια. Γνωσιακή Συμπεριφορική Θεραπεία &amp; Διασυνδετική Ψυχιατρική.</p>
             </div>
-            <div class="footer-col">
+            <div>
+                <h4>Επικοινωνία</h4>
+                <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Βουτσινά 89, Χολαργός, Αττική</span></div>
+                <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:+306978902120">+30 697 890 2120</a></div>
+                <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><a href="mailto:slianeri.psy@gmail.com">slianeri.psy@gmail.com</a></div>
+            </div>
+            <div class="footer-hours">
                 <h4>Ωράριο Λειτουργίας</h4>
-                <p>Δευτέρα - Παρασκευή</p>
-                <p>11:00 – 21:00</p>
-                <p><em>Αποκλειστικά κατόπιν ραντεβού</em></p>
-            </div>
-            <div class="footer-col">
-                <h4>Κλείστε Συνεδρία</h4>
-                <p>Κάντε το πρώτο βήμα για την εσωτερική σας ηρεμία.</p>
-                <br>
-                <a href="https://www.instadoctor.gr/doctor/lianeri-sandy" class="btn" style="background-color: var(--color-white); color: var(--color-text);" target="_blank">Online Ραντεβου</a>
+                <p>Δευτέρα – Παρασκευή<br>11:00 – 21:00<br><em style="color:var(--c-accent);">Κατόπιν Ραντεβού</em></p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Σάντυ Λιανέρη. Όλα τα δικαιώματα διατηρούνται. Designed by <a href="https://advonmedia.com" target="_blank">Advon Media</a>.</p>
+            <span>&copy; 2026 Σάντυ Λιανέρη. Όλα τα δικαιώματα διατηρούνται.</span>
+            <span>Designed by <a href="https://advonmedia.com" target="_blank" rel="noopener">Advon Media</a></span>
         </div>
-    </footer>
-
-    <div id="imageModal" class="modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImg">
     </div>
+</footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Scroll Reveal Animation
-            const reveals = document.querySelectorAll('.reveal');
-            
-            const revealOnScroll = () => {
-                const windowHeight = window.innerHeight;
-                const elementVisible = 100;
-
-                reveals.forEach(reveal => {
-                    const elementTop = reveal.getBoundingClientRect().top;
-                    if (elementTop < windowHeight - elementVisible) {
-                        reveal.classList.add('active');
-                    }
-                });
-            };
-
-            window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll(); // Trigger on load
-
-            // Lightbox Modal Logic
-            const modal = document.getElementById("imageModal");
-            const modalImg = document.getElementById("modalImg");
-            const triggers = document.querySelectorAll(".lightbox-trigger");
-            const closeBtn = document.querySelector(".close-modal");
-
-            triggers.forEach(trigger => {
-                trigger.addEventListener("click", function() {
-                    modal.style.display = "block";
-                    modalImg.src = this.src;
-                });
-            });
-
-            closeBtn.addEventListener("click", () => {
-                modal.style.display = "none";
-            });
-
-            window.addEventListener("click", (e) => {
-                if (e.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
-        });
-    </script>
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60)});
+const toggle=document.getElementById('navToggle'),mobileMenu=document.getElementById('mobileMenu');
+toggle.addEventListener('click',()=>{toggle.classList.toggle('active');mobileMenu.classList.toggle('active');document.body.style.overflow=mobileMenu.classList.contains('active')?'hidden':''});
+function closeMobile(){toggle.classList.remove('active');mobileMenu.classList.remove('active');document.body.style.overflow=''}
+const observer=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');observer.unobserve(el.target)}})},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
+</script>
 </body>
 </html>
